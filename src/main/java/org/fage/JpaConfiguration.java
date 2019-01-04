@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement(proxyTargetClass=true)
 @EnableJpaRepositories(basePackages={"org.fage.**.repository"})
 @EntityScan(basePackages={"org.fage.**.domain"})
+@EnableJpaAuditing
 public class JpaConfiguration {
 	@Bean
 	PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor(){

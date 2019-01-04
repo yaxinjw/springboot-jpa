@@ -9,10 +9,13 @@ import javax.transaction.Transactional;
 import org.fage.JpaConfiguration;
 import org.fage.domain.Department;
 import org.fage.domain.Role;
+import org.fage.domain.Student;
 import org.fage.domain.User;
 import org.fage.repository.DepartmentRepository;
 import org.fage.repository.RoleRepository;
+import org.fage.repository.StudentDao;
 import org.fage.repository.UserRepository;
+import org.fage.service.StudentServiceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,9 +36,14 @@ import com.mysql.jdbc.log.LogFactory;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RepositoryTest {
+
 	private final Logger log = LoggerFactory.getLogger(RepositoryTest.class);
-	
-	
+
+
+	@Autowired
+	StudentDao studentDao;
+	@Autowired
+	StudentServiceImpl studentServiceImpl;
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
@@ -43,7 +51,12 @@ public class RepositoryTest {
 	@Autowired
 	DepartmentRepository departmentRepository;
 
-	/*@Before
+	@Test
+	public void 测试乐观锁() throws Exception {
+		studentServiceImpl.test();
+	}
+
+	//	@Before
 	public void initData() {
 		departmentRepository.deleteAll();
 		roleRepository.deleteAll();
@@ -68,14 +81,14 @@ public class RepositoryTest {
 		u.setRoles(roles);
 		userRepository.save(u);
 		Assert.assertNotNull(u.getId());
-	}*/
+	}
 
 	@Test
-	public void testGeneralMethod(){
+	public void testGeneralMethod() {
 		System.out.println(userRepository.findByUsernameLike("蔡智法"));
 	}
-	
-	
+
+
 	@Test
 	public void testFindPage() {
 		//hibernate一对多分页原理：先分页，然后在将id作为引子查询（效率低）
